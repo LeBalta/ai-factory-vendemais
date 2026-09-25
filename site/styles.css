@@ -1,0 +1,130 @@
+﻿:root {
+  font-family: Inter, system-ui, Arial, sans-serif;
+  background: #f5f7fb;
+  color: #172033;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 48px 20px;
+}
+
+.hero {
+  margin-bottom: 28px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #ece9ff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 42px;
+  margin: 14px 0 8px;
+}
+
+.hero p {
+  color: #586174;
+  max-width: 650px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e2e6ee;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+form {
+  display: grid;
+  gap: 16px;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  font-weight: 600;
+}
+
+input {
+  padding: 12px 14px;
+  border: 1px solid #cfd5df;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+button {
+  padding: 13px 18px;
+  border: 0;
+  border-radius: 9px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.metricas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.metricas div {
+  background: #f6f7fa;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.metricas span {
+  display: block;
+  font-size: 13px;
+  color: #687184;
+}
+
+.metricas strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 20px;
+}
+
+pre {
+  overflow: auto;
+  background: #101827;
+  color: #eef2ff;
+  padding: 18px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+footer {
+  color: #697386;
+  font-size: 13px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+@media (max-width: 650px) {
+  .metricas {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+}

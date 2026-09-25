@@ -1,0 +1,110 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VendeMais | Qualificação de Leads B2B</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<main class="container">
+
+  <section class="hero">
+    <span class="badge">AI Factory • VendeMais</span>
+
+    <h1>Qualificação de Leads B2B</h1>
+
+    <p>
+      Demonstração pública do fluxo de validação,
+      enriquecimento determinístico e qualificação de leads.
+    </p>
+  </section>
+
+  <section class="card">
+
+    <h2>Dados do lead</h2>
+
+    <form id="leadForm">
+
+      <label>
+        Nome
+        <input
+          id="nome"
+          value="Maria Silva"
+          required>
+      </label>
+
+      <label>
+        E-mail
+        <input
+          id="email"
+          type="email"
+          value="maria@empresa.com.br"
+          required>
+      </label>
+
+      <label>
+        Empresa
+        <input
+          id="empresa"
+          value="Empresa Exemplo"
+          required>
+      </label>
+
+      <label>
+        Cargo
+        <input
+          id="cargo"
+          value="Gerente Comercial">
+      </label>
+
+      <button type="submit">
+        Qualificar lead
+      </button>
+
+    </form>
+
+  </section>
+
+  <section
+    id="resultado"
+    class="card resultado hidden">
+
+    <h2>Resultado</h2>
+
+    <div class="metricas">
+
+      <div>
+        <span>Score</span>
+        <strong id="score"></strong>
+      </div>
+
+      <div>
+        <span>Classificação</span>
+        <strong id="classificacao"></strong>
+      </div>
+
+      <div>
+        <span>Domínio</span>
+        <strong id="dominio"></strong>
+      </div>
+
+    </div>
+
+    <pre id="json"></pre>
+
+  </section>
+
+  <footer>
+    Ambiente PROD demonstrativo • Dados sintéticos •
+    Nenhuma informação pessoal é armazenada.
+  </footer>
+
+</main>
+
+<script src="app.js"></script>
+
+</body>
+</html>
