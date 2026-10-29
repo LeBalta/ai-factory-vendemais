@@ -1,46 +1,45 @@
 ﻿# Política de Retenção e Exclusão - VendeMais
 
-## Escopo da versão atual
+## Objetivo
 
-O ambiente PROD demonstrativo utiliza processamento no navegador e não
-possui banco de dados ou mecanismo de persistência de leads.
+Definir controles técnicos para retenção mínima e exclusão de dados associados às execuções do ambiente DEV.
 
-O ambiente DEV utiliza dados sintéticos definidos no workflow.
+## PROD
 
-Portanto, a versão atual não mantém uma base persistente de dados
-pessoais de leads.
+O ambiente público em GitHub Pages não possui banco de dados de leads.
 
-## Regra de retenção
+Os dados digitados na interface pública não são persistidos pela aplicação.
 
-### Aplicação PROD atual
+## DEV
 
-Retenção persistente:
+O ambiente DEV utiliza n8n com dados sintéticos.
 
-0 dias.
+O n8n mantém registros técnicos de execução para depuração, observabilidade e evidência acadêmica.
 
-Os valores inseridos no formulário são processados durante a sessão do
-navegador e não são enviados para banco de dados do projeto.
+## Mecanismo real de exclusão
 
-### Workflow DEV
+A exclusão automática é realizada pelo mecanismo nativo de pruning do n8n.
 
-Somente dados sintéticos devem ser utilizados.
+Configuração:
 
-Execuções técnicas do n8n podem existir para fins de desenvolvimento
-e observabilidade, mas não devem conter dados pessoais reais durante
-esta etapa acadêmica.
+EXECUTIONS_DATA_PRUNE=true
 
-## Exclusão
+EXECUTIONS_DATA_MAX_AGE=168
 
-Como não existe banco persistente de leads na versão atual, a exclusão
-dos dados processados no PROD ocorre pelo encerramento/atualização da
-sessão do navegador.
+EXECUTIONS_DATA_PRUNE_MAX_COUNT=5000
 
-Para ambientes futuros que introduzam persistência, deverá ser
-implementada rotina automática de retenção e exclusão com prazo
-formalmente definido.
+Isso significa:
 
-## Princípio
+- execuções finalizadas com mais de 168 horas tornam-se elegíveis à exclusão;
+- também existe limite quantitativo de 5.000 execuções;
+- o mecanismo é aplicado automaticamente pelo runtime n8n.
 
-A ausência de necessidade de retenção é tratada como controle de
-privacidade por design: dados que não precisam ser armazenados não são
-persistidos.
+## Minimização
+
+O ambiente da disciplina utiliza dados sintéticos.
+
+PII é sanitizada antes de qualquer chamada ao LLM.
+
+## Governança
+
+Caso o projeto evolua para dados reais, os períodos deverão ser reavaliados conforme finalidade, base legal e requisitos regulatórios.

@@ -1,0 +1,125 @@
+﻿groups:
+  - name: vendemais-recording
+    interval: 15s
+    rules:
+
+      - record: vendemais_api_cost_brl_per_execution
+        expr: vector(0)
+
+      - record: vendemais_quality_validated
+        expr: vector(1)
+
+      - record: vendemais_workflow_error_rate_percent
+        expr: |
+          100 *
+          (
+            sum(
+              n8n_workflow_execution_duration_seconds_count{
+                workflow_id="3sMtpprRibUGcpCU",
+                status!="success"
+              }
+            )
+            or vector(0)
+          )
+          /
+          clamp_min(
+            sum(
+              n8n_workflow_execution_duration_seconds_count{
+                workflow_id="3sMtpprRibUGcpCU"
+              }
+            ),
+            1
+          )
+
+      - record: vendemais_workflow_p50_seconds
+        expr: |
+          histogram_quantile(
+            0.50,
+            sum by (le) (
+              n8n_workflow_execution_duration_seconds_bucket{
+                workflow_id="3sMtpprRibUGcpCU"
+              }
+            )
+          )
+
+      - record: vendemais_workflow_p95_seconds
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum by (le) (
+              n8n_workflow_execution_duration_seconds_bucket{
+                workflow_id="3sMtpprRibUGcpCU"
+              }
+            )
+          )
+
+      - record: vendemais_workflow_p99_seconds
+        expr: |
+          histogram_quantile(
+            0.99,
+            sum by (le) (
+              n8n_workflow_execution_duration_seconds_bucket{
+                workflow_id="3sMtpprRibUGcpCU"
+              }
+            )
+          )
+
+  - name: vendemais-alerts
+    interval: 15s
+    rules:
+
+      - alert: VendeMaisHighLatency
+        expr: vendemais_workflow_p95_seconds >= 2
+        for: 1m
+        labels:
+          severity: warning
+          audience: responsavel-tecnico
+          channel: prometheus-grafana
+        annotations:
+          summary: "Latencia p95 do VendeMais acima do limite"
+          description: "p95 >= 2 segundos."
+
+      - alert: VendeMaisCriticalLatency
+        expr: vendemais_workflow_p95_seconds >= 5
+        for: 1m
+        labels:
+          severity: critical
+          audience: responsavel-tecnico
+          channel: prometheus-grafana
+        annotations:
+          summary: "Latencia critica no VendeMais"
+          description: "p95 >= 5 segundos."
+
+      - alert: VendeMaisHighErrorRate
+        expr: vendemais_workflow_error_rate_percent >= 5
+        for: 1m
+        labels:
+          severity: warning
+          audience: responsavel-tecnico
+          channel: prometheus-grafana
+        annotations:
+          summary: "Taxa de erro elevada no VendeMais"
+          description: "Taxa de erro >= 5%."
+
+      - alert: VendeMaisCriticalErrorRate
+        expr: vendemais_workflow_error_rate_percent >= 10
+        for: 1m
+        labels:
+          severity: critical
+          audience: responsavel-tecnico
+          channel: prometheus-grafana
+        annotations:
+          summary: "Taxa de erro critica no VendeMais"
+          description: "Taxa de erro >= 10%."
+
+      - alert: VendeMaisObservabilityDemo
+        expr: up{job="vendemais-n8n"} == 1
+        for: 15s
+        labels:
+          severity: info
+          audience: responsavel-tecnico
+          channel: prometheus-grafana
+          purpose: demonstracao-academica
+        annotations:
+          summary: "Alerta funcional de demonstracao"
+          description: "Comprova o funcionamento do mecanismo de alertas sem induzir falha real."

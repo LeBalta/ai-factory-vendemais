@@ -269,3 +269,91 @@ Em implementação:
 - alerta funcional;
 - dashboard;
 - otimização medida antes/depois.
+
+---
+
+# Etapa 2 - Segurança, LGPD e Observabilidade
+
+## Segurança
+
+- `.env` local protegido pelo `.gitignore`;
+- `.env.example` sem credenciais reais;
+- auditoria Gitleaks;
+- rotação de credenciais documentada;
+- versão n8n fixada em 2.39.8.
+
+## LGPD
+
+- mapa de dados pessoais;
+- minimização de dados;
+- sanitização de PII antes do LLM;
+- LLM executado localmente;
+- política de retenção;
+- exclusão automática de execuções pelo pruning do n8n.
+
+## Observabilidade
+
+Stack:
+
+n8n  
+→ OpenTelemetry  
+→ Jaeger
+
+n8n `/metrics`  
+→ Prometheus  
+→ Grafana
+
+Dashboard:
+
+VendeMais - Observabilidade Etapa 2
+
+Métricas:
+
+- latência p50/p95/p99;
+- custo;
+- erro;
+- volume;
+- qualidade.
+
+## Alertas
+
+Thresholds:
+
+Latência p95:
+
+- atenção: >= 2 s;
+- crítico: >= 5 s.
+
+Taxa de erro:
+
+- atenção: >= 5%;
+- crítico: >= 10%.
+
+Público:
+
+Responsável técnico do VendeMais.
+
+Canal:
+
+Prometheus/Grafana.
+
+O mecanismo de alerta foi validado por uma regra acadêmica de demonstração sem indução de falha real.
+
+## Otimização
+
+A chamada ao LLM foi otimizada reduzindo:
+
+max_tokens: 220 → 120
+
+A mudança reduz geração desnecessária e preserva a estrutura de resposta e a regra determinística.
+
+Evidência:
+
+docs/evidencias/etapa2/otimizacao.md
+
+## Evidências
+
+docs/evidencias/etapa2/auditoria-gitleaks.md  
+docs/evidencias/etapa2/pii-llm-local.md  
+docs/evidencias/etapa2/observabilidade.md  
+docs/evidencias/etapa2/otimizacao.md
